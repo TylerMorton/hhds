@@ -45,6 +45,4 @@ jobs:
 
     - name: Build Rust project
       run: |
-        cd hhds/hhds-sys
-        cargo build
-
+        bazel build //hhds_hhds_sys
