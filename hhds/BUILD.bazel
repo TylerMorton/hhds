@@ -8,12 +8,14 @@ load("@rules_rust//rust:defs.bzl",
 	"rust_library",
 	"rust_test"
 )
-load("@rules_rust_bindgen//:defs.bzl",
-	"rust_bindgen_library",
-)
+#load("@rules_rust_bindgen//:defs.bzl",
+#	"rust_bindgen_library",
+#)
 
 
 # -- Rust interface configuration & rules --
+
+#exports_files(["hhds_sys"])
 
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl",
@@ -25,36 +27,34 @@ load("@rules_rust//rust:defs.bzl",
 
 rust_library(
     name = "hhds_sys",
-    srcs = [
-	"hhds_sys/src/lib.rs",
-	"hhds_sys/src/bindings.rs",
-	"hhds_sys/src/tree.rs"
-    ],
+    srcs = glob(["hhds_sys/src/**/*.rs"]),
+    crate_root = "hhds_sys/src/lib.rs",
+    #srcs = [],
+    #crate_root = "//hhds/hhds_sys:src/lib.rs",
     edition = "2021",
+    deps = [":core"],
+    #deps = ["//hhds/hhds_sys:hhds_sys"],
     visibility = ["//visibility:public"],
 )
 
-rust_test(
-    name = "hhds-sys-test",
-    srcs = [
-	"hhds_sys/src/bindings.rs",
-	"hhds_sys/tests/forest_correctness.rs",
-    ],
-    crate_root = "hhds_sys/tests/forest_correctness.rs",
-    deps = [":core", ":hhds_sys"],
-    edition = "2021",
-    visibility = ["//visibility:public"],
-)
+#rust_test(
+#    name = "hhds-sys-test",
+#    srcs = glob(["hhds_sys/src/**/*.rs", "hhds_sys/tests/**/*.rs"]),
+#    crate_root = glob(["hhds_sys:tests/forest_correctness.rs"]),
+#    deps = [":core", ":hhds_sys"],
+#    edition = "2021",
+#    visibility = ["//visibility:public"],
+#)
 
-rust_binary(
-    name = "hhds_sys_example",
-    srcs = [
-	"hhds_sys/src/main.rs",
-    ],
-    deps = [":core", ":hhds_sys"],
-    edition = "2021",
-    visibility = ["//visibility:public"],
-)
+#rust_binary(
+#    name = "hhds_sys_example",
+#    srcs = [
+##	"hhds_sys/src/main.rs",
+#    ],
+#    deps = [":core", ":hhds_sys"],
+#    edition = "2021",
+#    visibility = ["//visibility:public"],
+#)
 
 
 #rustfmt_test(
