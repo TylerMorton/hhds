@@ -45,6 +45,5 @@ jobs:
 
     - name: Build Rust project
       run: |
-        cd hhds/hhds-sys
-        cargo test
+        bazel test //hhds:hhds-sys-test
 
